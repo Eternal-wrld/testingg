@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Confessions to Tashyy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;500&family=Poppins:wght@300;500&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to top, #1a1a40, #573b8a, #ff758c);
+      background-attachment: fixed;
+      color: #fff;
+      overflow: hidden;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5rem;
+      color: #ffe0f0;
+      text-shadow: 0 0 15px #fff;
+      text-align: center;
+      padding: 30px 20px 10px 20px;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .wrapper {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px 50px 20px;
+    }
+    .confession-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      max-width: 1200px;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+    .confession-container.visible {
+      opacity: 1;
+    }
+    .confession-box {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 30px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      text-align: center;
+      width: 300px;
+      box-shadow: 0 0 20px rgba(0, 40, 100, 0.7);
+      user-select: none;
+      line-height: 1.4;
+    }
+    .confession-box:last-child {
+      margin-top: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #ffe0f0;
+    }
+    .star {
+      position: absolute;
+      color: white;
+      font-size: 12px;
+      opacity: 0.5;
+      animation: twinkle 2s infinite alternate;
+      text-shadow: 0 0 5px white, 0 0 10px white;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.3; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.3); }
+    }
+    .heart {
+      position: fixed;
+      font-size: 18px;
+      color: #ff4d6d;
+      pointer-events: none;
+      animation: float 1s ease-out forwards;
+      z-index: 99;
+      user-select: none;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-50px) scale(0.5); opacity: 0; }
+    }
+    .flying-text {
+      position: fixed;
+      font-family: 'Poppins', sans-serif;
+      font-size: 20px;
+      opacity: 0.9;
+      animation: flyUp 3s linear forwards;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+      font-weight: 600;
+      text-shadow: 0 0 4px #ff4d6d;
+    }
+    @keyframes flyUp {
+      0% { transform: translateY(0); opacity: 0.9; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+    .btn-group {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 101;
+    }
+    .btn-group a {
+      padding: 10px 20px;
+      background-color: rgba(255,182,193,0.25);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 30px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s;
+      user-select: none;
+      text-align: center;
+    }
+    .btn-group a:hover {
+      background-color: rgba(255,182,193,0.5);
+    }
+    .music-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      padding: 12px 28px;
+      background-color: rgba(255, 182, 193, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      z-index: 101;
+      font-weight: 600;
+    }
+    .music-btn:hover {
+      background-color: rgba(255,182,193,0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title">Confessions</div>
+
+  <div class="wrapper">
+    <div class="confession-container" id="confessions">
+      <div class="confession-box">I miss you even when you're gone for 1 second.</div>
+      <div class="confession-box">I admire and look back at your pictures WAY more than you think :3</div>
+      <div class="confession-box">I miss your voice every second of the day.</div>
+      <div class="confession-box">I imagine us dancing in the rain, kissing under the drizzle.</div>
+      <div class="confession-box">A simple "hm?" and your pic makes me smile.</div>
+      <div class="confession-box">I wanna cuddle you every single night.</div>
+      <div class="confession-box">I reread our messages daily for comfort.</div>
+      <div class="confession-box">You're the best thing that's ever happened to me.</div>
+      <div class="confession-box">I cry sometimes scared of losing you.</div>
+      <div class="confession-box">Overthinking? Yeah. But your love reassures me.</div>
+      <div class="confession-box">I stalk your TikToks and wanna hug you when I see sad ones.</div>
+      <div class="confession-box">I want forever with you.</div>
+      <div class="confession-box">Yes I get jealous 😝 but it's only cause I care.<br><br>
+        P.S. click the screen 13 times for the last confession 😏
+      </div>
+    </div>
+  </div>
+
+  <div class="btn-group">
+    <a href="index.html">← Back to Home</a>
+    <a href="poem.html">← Previous Page</a>
+    <a href="promises.html">Click me for the next page baby :3</a>
+  </div>
+
+  <button class="music-btn" id="music-toggle">Pause Music</button>
+
+  <audio id="bg-music" src="idontwannabeyouanymore.mp3" loop></audio>
+
+  <script>
+    const confessions = document.getElementById('confessions');
+    const bgMusic = document.getElementById('bg-music');
+    let isPlaying = false;
+    let clickCount = 0;
+    let flyingInterval = null;
+    const emojis = ['❤️', '😍', '🥰', '😘', '💕', '💖', '🌹', '💘', '😚', '😻'];
+
+    window.addEventListener('click', () => {
+      if (!confessions.classList.contains('visible')) {
+        confessions.classList.add('visible');
+      }
+      if (!isPlaying) {
+        bgMusic.play();
+        isPlaying = true;
+      }
+
+      clickCount++;
+      if (clickCount === 13) {
+        if (!flyingInterval) {
+          startFlyingTexts();
+        }
+      }
+    });
+
+    function startFlyingTexts() {
+      flyingInterval = setInterval(() => {
+        const text = document.createElement('div');
+        text.className = 'flying-text';
+        text.textContent = `I love you more than you love me ${emojis[Math.floor(Math.random() * emojis.length)]}`;
+        text.style.left = `${Math.random() * (window.innerWidth - 200)}px`;
+        text.style.top = `${window.innerHeight}px`;
+        document.body.appendChild(text);
+        setTimeout(() => text.remove(), 3000);
+      }, 200);
+    }
+
+    // Stars
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.textContent = '★';
+      star.style.fontSize = `${Math.random() * 10 + 10}px`;
+      star.style.top = `${Math.random() * 100}vh`;
+      star.style.left = `${Math.random() * 100}vw`;
+      star.style.opacity = Math.random() * 0.8 + 0.2;
+      star.style.animationDuration = `${1.5 + Math.random() * 3}s`;
+      document.body.appendChild(star);
+    }
+
+    // Heart trail on mousemove
+    document.addEventListener('mousemove', (e) => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = '❤️';
+      heart.style.left = `${e.clientX}px`;
+      heart.style.top = `${e.clientY}px`;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1000);
+    });
+
+    // Music toggle button
+    document.getElementById('music-toggle').addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isPlaying) {
+        bgMusic.pause();
+        isPlaying = false;
+        e.target.textContent = 'Play Music';
+      } else {
+        bgMusic.play();
+        isPlaying = true;
+        e.target.textContent = 'Pause Music';
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

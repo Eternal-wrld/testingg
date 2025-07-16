@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Promises to Tashyy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      height: 100%;
+      width: 100%;
+      background: radial-gradient(ellipse at bottom, #0f2027, #203a43, #2c5364);
+      /* Prevent white flash by setting background on html */
+    }
+
+    body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      position: relative;
+      opacity: 0;
+      animation: fadein 1.5s ease forwards;
+      background: transparent; /* body transparent because html sets bg */
+    }
+
+    @keyframes fadein {
+      to { opacity: 1; }
+    }
+
+    /* CLOUDS */
+    .cloud {
+      position: absolute;
+      top: 20px;
+      background: white;
+      border-radius: 50%;
+      opacity: 50%;
+      animation: cloudmove 60s linear infinite;
+      z-index: 1;
+      filter: blur(12px);
+    }
+
+    .cloud::before,
+    .cloud::after {
+      content: '';
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .cloud::before {
+      width: 80%;
+      height: 80%;
+      top: -40%;
+      left: 10%;
+    }
+
+    .cloud::after {
+      width: 60%;
+      height: 60%;
+      top: 20%;
+      left: 50%;
+    }
+
+    @keyframes cloudmove {
+      0% { transform: translateX(-200px); }
+      100% { transform: translateX(110vw); }
+    }
+
+    .title {
+      position: relative;
+      margin-top: 50px;
+      text-align: center;
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5rem;
+      color: white;
+      text-shadow: 
+        0 0 15px rgba(0, 60, 100, 0.8),
+        0 0 25px rgba(0, 100, 160, 0.6);
+      z-index: 3;
+    }
+
+    .bg-text {
+      position: absolute;
+      font-family: 'Great Vibes', cursive;
+      color: rgba(255, 192, 203, 0.08);
+      font-size: 3rem;
+      user-select: none;
+      pointer-events: none;
+      animation: floattext 25s infinite ease-in-out alternate;
+      white-space: nowrap;
+      z-index: 0;
+    }
+
+    @keyframes floattext {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-30px); }
+    }
+
+    .star {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: white;
+      clip-path: polygon(
+        50% 0%, 61% 35%, 98% 35%, 
+        68% 57%, 79% 91%, 50% 70%, 
+        21% 91%, 32% 57%, 2% 35%, 
+        39% 35%
+      );
+      opacity: 0.6;
+      animation: twinkle 2s infinite ease-in-out alternate;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+      z-index: 0;
+    }
+
+    @keyframes twinkle {
+      0% { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(1.3); opacity: 1; }
+    }
+
+    .promise-container {
+      position: relative;
+      top: 5%;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto 120px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      padding: 40px 5%;
+      z-index: 2;
+      grid-auto-rows: minmax(150px, auto);
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 1s ease, transform 0.8s ease;
+      pointer-events: none;
+    }
+
+    .promise-container.active {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    /* Pulsing glow animation */
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 
+          0 0 25px rgba(0, 60, 100, 0.8),
+          0 0 10px rgba(0, 100, 160, 0.5);
+      }
+      50% {
+        box-shadow: 
+          0 0 35px rgba(0, 60, 100, 1),
+          0 0 20px rgba(0, 100, 160, 0.75);
+      }
+    }
+
+    .promise-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 30px;
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.7rem;
+      color: #ffe0f0;
+      box-shadow: 
+        0 0 25px rgba(0, 60, 100, 0.8),
+        0 0 10px rgba(0, 100, 160, 0.5);
+      min-height: 150px;
+      transition: 0.3s;
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    .promise-box:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.02);
+    }
+
+    .promise-13 {
+      grid-column: 2;
+    }
+
+    @media (max-width: 600px) {
+      .promise-box {
+        font-size: 1.3rem;
+        padding: 20px;
+      }
+
+      .title {
+        font-size: 2.2rem;
+      }
+
+      .back-btn, .prev-btn {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+      }
+    }
+
+    .heart {
+      position: fixed;
+      font-size: 18px;
+      color: #ff99cc;
+      pointer-events: none;
+      animation: float 1s ease-out forwards;
+      z-index: 99;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-50px) scale(0.5); opacity: 0; }
+    }
+
+    .back-btn {
+      position: fixed;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(255, 182, 193, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 12px 25px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+      transition: all 0.3s ease;
+      z-index: 100;
+      user-select: none;
+    }
+
+    .back-btn:hover {
+      background-color: rgba(255, 182, 193, 0.5);
+      transform: translateX(-50%) scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 192, 203, 0.7);
+    }
+
+    .prev-btn {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(255, 182, 193, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 12px 25px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(255, 182, 193, 0.5);
+      transition: all 0.3s ease;
+      z-index: 100;
+      user-select: none;
+    }
+
+    .prev-btn:hover {
+      background-color: rgba(255, 182, 193, 0.5);
+      transform: translateX(-50%) scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 192, 203, 0.7);
+    }
+
+    audio { display: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Glowing Title -->
+  <div class="title">I promise</div>
+
+  <!-- Clouds -->
+  <div class="cloud" style="width: 160px; height: 60px; left: -200px;"></div>
+  <div class="cloud" style="width: 220px; height: 70px; top: 60px; left: -300px; animation-delay: 10s;"></div>
+  <div class="cloud" style="width: 180px; height: 55px; top: 40px; left: -400px; animation-delay: 20s;"></div>
+  <div class="cloud" style="width: 200px; height: 65px; top: 30px; left: -500px; animation-delay: 5s;"></div>
+  <div class="cloud" style="width: 170px; height: 55px; top: 80px; left: -600px; animation-delay: 15s;"></div>
+  <div class="cloud" style="width: 210px; height: 75px; top: 10px; left: -700px; animation-delay: 25s;"></div>
+
+  <!-- Floating background "i promise" -->
+  <script>
+    for (let i = 0; i < 80; i++) {
+      const text = document.createElement('div');
+      text.className = 'bg-text';
+      text.textContent = 'i promise';
+      text.style.top = `${Math.random() * 100}%`;
+      text.style.left = `${Math.random() * 100}%`;
+      text.style.transform += ` rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(text);
+    }
+  </script>
+
+  <!-- Stars -->
+  <script>
+    for (let i = 0; i < 100; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDuration = `${1.5 + Math.random() * 2}s`;
+      star.style.animationDelay = `${Math.random() * 2}s`;
+      document.body.appendChild(star);
+    }
+  </script>
+
+  <!-- Promise Boxes -->
+  <div class="promise-container" id="promiseContainer">
+    <div class="promise-box">Promise 1</div>
+    <div class="promise-box">Promise 2</div>
+    <div class="promise-box">Promise 3</div>
+    <div class="promise-box">Promise 4</div>
+    <div class="promise-box">Promise 5</div>
+    <div class="promise-box">Promise 6</div>
+    <div class="promise-box">Promise 7</div>
+    <div class="promise-box">Promise 8</div>
+    <div class="promise-box">Promise 9</div>
+    <div class="promise-box">Promise 10</div>
+    <div class="promise-box">Promise 11</div>
+    <div class="promise-box">Promise 12</div>
+    <div class="promise-box promise-13">Promise 13</div>
+  </div>
+
+  <!-- Back and Previous Buttons -->
+  <a href="index.html" class="back-btn">← Back to Home</a>
+  <a href="confessions.html" class="prev-btn">← Previous Page</a>
+
+  <!-- Heart Trail -->
+  <script>
+    document.addEventListener('mousemove', (e) => {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = '💗';
+      heart.style.left = `${e.clientX}px`;
+      heart.style.top = `${e.clientY}px`;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1000);
+    });
+  </script>
+
+  <!-- Click to reveal & play music -->
+  <audio id="bg-music" src="slow.mp3"></audio>
+  <script>
+    const audio = document.getElementById('bg-music');
+    const promiseContainer = document.getElementById('promiseContainer');
+    document.addEventListener('click', () => {
+      audio.play().catch(() => console.log("Autoplay blocked."));
+      promiseContainer.classList.add('active');
+    }, { once: true });
+  </script>
+
+</body>
+</html>
+
+
+

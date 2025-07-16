@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stardust Whispers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, #0c0c1d, #1a1a2e);
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      font-size: 44px;
+      margin-top: 40px;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      z-index: 3;
+      position: relative;
+    }
+
+    .btn-group {
+      text-align: center;
+      margin-bottom: 20px;
+      z-index: 3;
+      position: relative;
+    }
+
+    .btn-group a {
+      display: inline-block;
+      margin: 5px 10px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 15px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+      transition: 0.3s;
+    }
+
+    .btn-group a:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .poem-box {
+      position: absolute;
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 700px;
+      padding: 30px 40px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(6px);
+      text-align: center;
+      font-size: 18px;
+      line-height: 1.8;
+      box-shadow: 0 0 20px rgba(30, 60, 150, 0.6);
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      z-index: 3;
+      color: white;
+      font-weight: 300;
+      pointer-events: none; /* prevent interaction until visible */
+      animation: pulseBlueGlow 3s ease-in-out infinite;
+    }
+
+    .poem-box.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Pulsing blue glow */
+    @keyframes pulseBlueGlow {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(30, 60, 150, 0.6);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(30, 60, 150, 1);
+      }
+    }
+
+    /* Pulsing pink glow for after 13th click */
+    @keyframes pulsePinkGlow {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(200, 100, 150, 0.7);
+      }
+      50% {
+        box-shadow: 0 0 35px rgba(200, 100, 150, 1);
+      }
+    }
+
+    /* Star and stardust styles remain unchanged */
+    .star, .stardust {
+      position: fixed;
+      color: white;
+      font-size: 14px;
+      opacity: 0.5;
+      animation: twinkle 2s infinite alternate;
+      text-shadow: 0 0 5px white, 0 0 10px white;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .stardust {
+      font-size: 10px;
+      color: #fff;
+      animation: floatDust 6s infinite linear;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.3; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.3); }
+    }
+
+    @keyframes floatDust {
+      0% { transform: translateY(0); opacity: 0.4; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    .trail-star {
+      position: absolute;
+      pointer-events: none;
+      font-size: 12px;
+      color: white;
+      animation: sparkleFade 1s forwards;
+      z-index: 2;
+    }
+
+    @keyframes sparkleFade {
+      to { opacity: 0; transform: scale(0.5); }
+    }
+
+    .moon {
+      position: fixed;
+      top: 60px;
+      right: 100px;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle at center, #fff, #ccc);
+      border-radius: 50%;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+      animation: floatMoon 4s ease-in-out infinite alternate;
+      z-index: 1;
+    }
+
+    @keyframes floatMoon {
+      from { transform: translateX(0px); }
+      to { transform: translateX(20px); }
+    }
+
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(6px);
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+      transition: background 0.3s;
+      z-index: 3;
+    }
+
+    .music-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .floating-love-msg {
+      position: fixed;
+      color: white;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      text-shadow: 0 0 8px rgba(30, 60, 150, 0.9);
+      opacity: 0.9;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+      transition: transform 6s linear, opacity 6s linear;
+      z-index: 1000;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Title -->
+  <h1>Stardust Whispers</h1>
+
+  <!-- Button Group -->
+  <div class="btn-group">
+    <a href="index.html">← Back to Home</a>
+    <a href="reasons.html">← Previous Page</a>
+    <a href="confessions.html">Click me to go to the next page darling :3</a>
+  </div>
+
+  <!-- Moon -->
+  <div class="moon"></div>
+
+  <!-- Poem Box -->
+  <div class="poem-box" id="poem-box">
+    <p>
+      Beneath the quiet night sky,<br>
+      The stars above shine softly, but brightly.<br>
+      Their gentle whispers cross the skies,<br>
+      Carrying all my love and sighs.<br><br>
+      Even though miles stretch far and wide between,<br>
+      Your heart's the closest and dearest I've ever seen.<br>
+      Like stardust floating throughout the air,<br>
+      My thoughts of you are always there.<br><br>
+      No matter how the distance grows,<br>
+      Our love still shines, like the stars in the sky.<br>
+      A constant glow, but a steady flame,<br>
+      That calls me softly by your name.<br><br>
+      So when you look up at the stars,<br>
+      Remember baby, no matter how far — through whispered skies,<br>
+      My soul will always say<br>
+      I'm yours, forever, every day baby. 💗
+    </p>
+    <p style="margin-top: 20px; font-style: italic; font-size: 14px; color: #ccc;">
+      P.S. Click anywhere on the screen <strong>13 times</strong> for a surprise! 🌟
+    </p>
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="I want it.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <button class="music-btn" id="music-toggle">Pause Music</button>
+
+  <script>
+    const poemBox = document.getElementById('poem-box');
+    const music = document.getElementById('bg-music');
+    const toggleBtn = document.getElementById('music-toggle');
+    let isPlaying = false;
+    let clickCount = 0;
+
+    const loveMessages = [
+      "I love you more than the stars ✨ :3",
+      "You're my brightest star 🌟 :3",
+      "My heart glows for you 💖 :3",
+      "Our love is written in the stars 💫 :3",
+      "You light up my universe 🌌 :3",
+      "Forever yours, star-crossed 🌠 :3",
+      "Love you past the Milky Way 🚀 :3",
+      "Every star reminds me of you 🌟 :3",
+      "You’re my cosmic love 💕 :3",
+      "Together, we shine brightest 💎 :3"
+    ];
+
+    window.addEventListener('click', () => {
+      if (!poemBox.classList.contains('visible')) {
+        poemBox.classList.add('visible');
+      }
+      if (!isPlaying) {
+        music.play().then(() => {
+          isPlaying = true;
+          toggleBtn.textContent = 'Pause Music';
+        }).catch(err => console.log("Autoplay blocked:", err));
+      }
+
+      clickCount++;
+
+      if (clickCount === 13 && !window.infiniteMessagesStarted) {
+        window.infiniteMessagesStarted = true;
+        // Change glow animation to pulsePinkGlow for soft dark pink
+        poemBox.style.animation = 'pulsePinkGlow 3s ease-in-out infinite';
+        startInfiniteMessages();
+        spawnStardust();
+      }
+    });
+
+    toggleBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        music.pause();
+        toggleBtn.textContent = 'Play Music';
+        isPlaying = false;
+      } else {
+        music.play();
+        toggleBtn.textContent = 'Pause Music';
+        isPlaying = true;
+      }
+    });
+
+    function createFloatingMessage(text) {
+      const msg = document.createElement('div');
+      msg.textContent = text;
+      msg.className = 'floating-love-msg';
+      msg.style.left = Math.random() * 90 + 'vw';
+      msg.style.bottom = '-30px';
+      msg.style.fontSize = (14 + Math.random() * 8) + 'px';
+      document.body.appendChild(msg);
+      requestAnimationFrame(() => {
+        msg.style.transform = `translateY(-110vh)`;
+        msg.style.opacity = '0';
+      });
+      setTimeout(() => msg.remove(), 6000);
+    }
+
+    function startInfiniteMessages() {
+      setInterval(() => {
+        const text = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+        createFloatingMessage(text);
+      }, 500);
+    }
+
+    function spawnStardust() {
+      for (let i = 0; i < 150; i++) {
+        const dust = document.createElement('div');
+        dust.className = 'stardust';
+        dust.textContent = '✦';
+        dust.style.left = Math.random() * 100 + 'vw';
+        dust.style.bottom = Math.random() * 100 + 'vh';
+        dust.style.opacity = Math.random() * 0.7 + 0.3;
+        dust.style.fontSize = (6 + Math.random() * 6) + 'px';
+        dust.style.animationDuration = (5 + Math.random() * 3) + 's';
+        document.body.appendChild(dust);
+      }
+    }
+
+    const totalStars = 150;
+    for (let i = 0; i < totalStars; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.textContent = '★';
+      star.style.fontSize = (10 + Math.random() * 10) + 'px';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.opacity = Math.random() * 0.8 + 0.2;
+      star.style.animationDuration = (1.5 + Math.random() * 3) + 's';
+      document.body.appendChild(star);
+    }
+
+    document.addEventListener('mousemove', e => {
+      const trail = document.createElement('div');
+      trail.className = 'trail-star';
+      trail.textContent = '★';
+      trail.style.top = e.pageY + 'px';
+      trail.style.left = e.pageX + 'px';
+      document.body.appendChild(trail);
+      setTimeout(() => trail.remove(), 1000);
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+

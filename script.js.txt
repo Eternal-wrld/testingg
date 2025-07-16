@@ -1,0 +1,4 @@
+function showLove() {
+  document.getElementById("loveMessage").innerText = "I love you more than words can ever say 💖";
+}
+

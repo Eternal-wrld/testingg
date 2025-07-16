@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>100 Reasons Why I Love You</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #4b2c61, #6a397d, #2e1e4d);
+      background-attachment: fixed;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Great Vibes', cursive;
+      font-size: 48px;
+      margin-top: 40px;
+      margin-bottom: 10px;
+      color: #fff;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+      z-index: 2;
+      position: relative;
+    }
+
+    .back-btn, .next-btn {
+      text-align: center;
+      margin-bottom: 15px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .back-btn a, .next-btn a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 15px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+      transition: 0.3s;
+    }
+
+    .back-btn a:hover, .next-btn a:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .reasons-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 10px 20px 80px;
+      gap: 20px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .reason-box {
+      width: 250px;
+      min-height: 60px;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(6px);
+      border-radius: 12px;
+      font-size: 17px;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4), 0 0 25px rgba(255, 255, 255, 0.3), 0 0 35px rgba(255, 255, 255, 0.2);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .reason-box.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .star {
+      position: absolute;
+      color: white;
+      font-size: 12px;
+      opacity: 0.5;
+      animation: twinkle 2s infinite alternate;
+      text-shadow: 0 0 5px white, 0 0 10px white;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.3; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.3); }
+    }
+
+    .heart-trail {
+      position: absolute;
+      pointer-events: none;
+      animation: fadeOut 1s forwards;
+      font-size: 18px;
+      z-index: 2;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.8);
+      }
+    }
+
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(6px);
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+      transition: background 0.3s;
+      z-index: 3;
+    }
+
+    .music-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>I love u</h1>
+
+  <div class="back-btn">
+    <a href="index.html">← Back to Home</a>
+  </div>
+
+  <div class="next-btn">
+    <a href="poem.html">Click me to go to the next page baby :3</a>
+  </div>
+
+  <!-- Audio -->
+  <audio id="bg-music" loop>
+    <source src="Happier than ever.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Play/Pause Music Button -->
+  <button class="music-btn" id="music-toggle">Pause Music</button>
+
+  <!-- 100 Reason Boxes -->
+  <div class="reasons-container" id="reasons">
+    <!-- All 100 boxes will be injected below by JavaScript -->
+  </div>
+
+  <script>
+    const container = document.getElementById('reasons');
+    const music = document.getElementById('bg-music');
+    const toggleBtn = document.getElementById('music-toggle');
+    let isPlaying = false;
+
+    const reasons = [
+      `I love it when you say “mwah”`,
+      `I love when you reassure me`,
+      `I love whenever you yap to me`,
+      `I love whenever you tell me about your school drama`,
+      `I love whenever you send those cute gifs when I ask for cuddles`,
+      `I love your smile`,
+      `I love your eyes`,
+      `I love your hair`,
+      `I love your face`,
+      `I love your cute little laugh otp (oh my lordy lord)`,
+      `I love how you always know how to make me fold (frickkk u 😒)`,
+      `I love how we can always have a deep conversation, with no judging. Just the two of us`,
+      `I love how we both listen to juice wrld :3`,
+      `I love your voice (mmm lol)`,
+      `I love our talks about reflecting, even though it can get sad :(`,
+      `I love how we both have the same sense of humor that’s literally amazing`,
+      `I love how you created so many websites just to reassure me`,
+      `I love how you're always checking up on me`,
+      `I love your singing voice (dude u need to start singing again)`,
+      `I love how you always try your best in everything`,
+      `I love how you can always beat me at those Roblox obbys but you sometimes say that I won even though I didn’t just to make me feel better 😒`,
+      `I love how you always support me in my decisions and tell me where I should improve`,
+      `I love how you correct me on my mistakes`,
+      `I love the way you call me baby`,
+      `I love the way you call me “my love”`,
+      `I love the way you randomly say “I love you” out of nowhere`,
+      `I love your desire to wanting to learn how to drive so badly`,
+      `I love you for risking your life every single day by even talking to me`,
+      `I love you for even choosing me`,
+      `I love you for trying to learn from your mistakes`,
+      `I love you for trying to be better`,
+      `I love you for being my safe person`,
+      `I love how you believe in me, even when I don’t believe in myself (creating this freaking website)`,
+      `You always make me say wallah whenever you ask if i’m okay (that card is overpowered)`,
+      `You’re my wife, my best friend, and like my mom all in one.`,
+      `I still fold whenever you call me baby`,
+      `You make me feel like the happiest boy in the world`,
+      `You getting jealous and overprotective over me is the hottest thing ever.`,
+      `I absolutely love how excited you get whenever you're happy about something`,
+      `I love it when you call me yours. I’m yours forever baby`,
+      `You’re strong, the strongest I know and you’re confident in what you know you can do.`,
+      `You put up with me even when I’m being annoying or weird`,
+      `I love your message reactions whenever we say goodnight or bye when we go eat.`,
+      `I love how you remember the little things about me`,
+      `You put all the effort in, even when you’re tired.`,
+      `I feel safe when I’m with you.`,
+      `You make me feel handsome, even when I think I look like a donkey (lol)`,
+      `You calm me down in some of the most annoying moments ever.`,
+      `I love when you randomly compliment me. (When you sent that pic of me and said mmm I folded so hard)`,
+      `Your arms? I wanna be held by you forever. Please.`,
+      `I love how we can always talk it out.`,
+      `I can always act like myself around you and that’s just amazing.`,
+      `I love your goofy and random side, it’s the cutest thing ever.`,
+      `I love our baby talk “hey i not tireds”`,
+      `I love how you actually hear me out`,
+      `I love whenever you text me “I miss you”`,
+      `I love that you feel like home.`,
+      `I love whenever we’re being goofy and start adding random periods at the end of our sentences.`,
+      `I love our freak talk (the notes lol)`,
+      `I love how passionate you are about your future`,
+      `I love how you always tell me i’m your baby`,
+      `I love whenever u tease me 😒 (i’ll get you back)`,
+      `I love the little hearts we draw on Snapchat`,
+      `I love all the reels you send me`,
+      `I love all the TikToks you send me`,
+      `I love it when you spam me`,
+      `I love how we try our best to work everything out`,
+      `I love the random silent moments we have on call, it’s so peaceful.`,
+      `I love that I start my day with you being the first thought and person on my mind`,
+      `I love that I end my day with you being my last thought and the last person on my mind before sleeping.`,
+      `I love it when you always tell me it’s time to sleep now`,
+      `I love how you instantly know when i’m off, or sad`,
+      `I love how we say “lol” or “lolz” after making a joke`,
+      `I love how we can be ourselves with each other`,
+      `I love how you posted me on your stories on both Snap and Insta (even added me as a highlight on your page?! 😍😍)`,
+      `I love when you end your sentences with “hm?” it gets me every time.`,
+      `“For me baby?” do I even need to explain that one.`,
+      `I love it when you say we’re forever.`,
+      `We’re both gonna try to make this work, no matter what.`,
+      `I love how I can NEVER get bored of talking with you`,
+      `I love the random Snap selfies and photo spams (I’m gonna need some more of that ma’am 😝)`,
+      `I love that I can proudly say you’re my soulmate.`,
+      `I love how we always pin images of each other`,
+      `I love how you're always here for me`,
+      `I love that I can’t go a single day without thinking about you`,
+      `You aren’t the only one who feels like we’re soul tied.`,
+      `I love how I can literally feel all your love through a screen`,
+      `I love our “ilym” arguments (we both know I love you more 🙄)`,
+      `I love how obsessed with each other we both are.`,
+      `I love how you inspire me to be better`,
+      `I love the fact that you literally would do anything for a cat`,
+      `I love how even though you know absolutely nothing about Transformers you still made a whole website on it for me`,
+      `Your taste in music is the complete opposite of what you look like. (You’re a thug at heart)`,
+      `I love you for who you are`,
+      `I love you forever, endlessly, and nothing will ever change that`
+    ];
+
+    // Inject reasons into DOM with fade-in
+    reasons.forEach((text, i) => {
+      const box = document.createElement('div');
+      box.className = 'reason-box';
+      box.textContent = text;
+      container.appendChild(box);
+    });
+
+    // Animate boxes on click
+    window.addEventListener('click', () => {
+      document.querySelectorAll('.reason-box').forEach((box, i) => {
+        setTimeout(() => box.classList.add('visible'), i * 30);
+      });
+
+      if (!isPlaying) {
+        music.play().then(() => {
+          isPlaying = true;
+          toggleBtn.textContent = 'Pause Music';
+        });
+      }
+    }, { once: true });
+
+    // Toggle music
+    toggleBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        music.pause();
+        toggleBtn.textContent = 'Play Music';
+        isPlaying = false;
+      } else {
+        music.play();
+        toggleBtn.textContent = 'Pause Music';
+        isPlaying = true;
+      }
+    });
+
+    // Heart trail
+    document.addEventListener('mousemove', e => {
+      const heart = document.createElement('div');
+      heart.className = 'heart-trail';
+      heart.textContent = '💖';
+      heart.style.left = e.pageX + 'px';
+      heart.style.top = e.pageY + 'px';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1000);
+    });
+
+    // Stars
+    const totalStars = 200;
+    for (let i = 0; i < totalStars; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.textContent = '★';
+      const size = Math.random() * 10 + 10;
+      star.style.fontSize = size + 'px';
+      star.style.top = Math.random() * 100 + 'vh';
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.opacity = Math.random() * 0.8 + 0.2;
+      star.style.animationDuration = `${1.5 + Math.random() * 3}s`;
+      document.body.appendChild(star);
+    }
+  </script>
+</body>
+</html>

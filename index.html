@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Starry Night</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      overflow-x: hidden;
+      height: 100vh;
+      background: linear-gradient(to bottom, #0b1d3a, #1a237e, #4a148c);
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      position: relative;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.3; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.3); }
+    }
+
+    .love-symbol {
+      position: absolute;
+      color: white;
+      font-weight: bold;
+      font-family: 'Arial', sans-serif;
+      pointer-events: none;
+      text-shadow: 0 0 5px rgba(255,255,255,0.8), 0 0 10px rgba(255,255,255,0.5);
+      animation: floatFade 4s infinite ease-in-out;
+    }
+
+    @keyframes floatFade {
+      0% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(-5px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 0.6; }
+    }
+
+    .header {
+      position: absolute;
+      top: 30px;
+      width: 100%;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .header h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 42px;
+      margin-bottom: 20px;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+      background: rgba(255,255,255,0.1);
+      padding: 10px 20px;
+      border-radius: 12px;
+      backdrop-filter: blur(4px);
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.2);
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    .main-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      z-index: 5;
+      padding: 20px;
+      max-width: 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.5s ease;
+    }
+    .main-container.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .hello-kitty {
+      object-fit: contain;
+      animation: glow 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+    }
+    .hello-kitty.left {
+      max-height: 150px;
+    }
+    .hello-kitty.right {
+      max-height: 500px;
+    }
+
+    @keyframes glow {
+      0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)); }
+      50% { filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.7)); }
+    }
+
+    .center-box {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(6px);
+      max-width: 600px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.5s ease;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .center-box.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .audio-controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.5s ease;
+    }
+    .audio-controls.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .shooting-star {
+      position: fixed;
+      width: 90px;
+      height: 90px;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 4;
+    }
+
+    .shooting-star svg {
+      width: 100%;
+      height: 90%;
+      filter: drop-shadow(0 0 12px white);
+      fill: white;
+      stroke: white;
+      stroke-width: 1;
+    }
+
+    .star-trail {
+      position: fixed;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 2;
+      animation: trailFade 1s linear forwards;
+      filter: blur(2px);
+    }
+
+    @keyframes trailFade {
+      0% { opacity: 0.8; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0.5); }
+    }
+
+    /* ⛅ Cloud Styles */
+    .cloud {
+      position: fixed;
+      top: 0;
+      background: rgba(255, 255, 255, 0.09);
+      border-radius: 50%;
+      z-index: 1;
+      filter: blur(12px);
+      animation: cloudMove linear infinite;
+      pointer-events: none; /* Let clicks pass through */
+    }
+
+    .cloud::before,
+    .cloud::after {
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 50%;
+    }
+
+    .cloud::before {
+      width: 80%;
+      height: 80%;
+      top: -40%;
+      left: 10%;
+    }
+
+    .cloud::after {
+      width: 60%;
+      height: 60%;
+      top: 20%;
+      left: 50%;
+    }
+
+    @keyframes cloudMove {
+      0% { transform: translateX(-200px); }
+      100% { transform: translateX(110vw); }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>A little reminder to you..</h1>
+    <div class="nav-links">
+      <a href="reasons.html">100 reasons why I love you</a>
+      <a href="poem.html">Stardust Whispers</a>
+      <a href="confessions.html">Confessions</a>
+      <a href="promises.html">Promises</a>
+    </div>
+  </div>
+
+  <div class="main-container" id="mainContainer">
+    <img src="hello-kitty.gif" alt="Hello Kitty Left" class="hello-kitty left">
+    <div class="center-box" id="centerBox">
+      <h2>A Little Reminder To you :3</h2>
+      <p>I love you</p>
+      <p>I love you even when your off</p>
+      <p>I love you on your sad days</p>
+      <p>I love you on your happy days</p>
+      <p>I love you on the days that you feel angry or upset</p>
+      <p>I love you even when you think you dont deserve it</p>
+      <p>I'm always gonna be here for you, no matter what</p>
+      <p>I'll always reassure you when you need it, even when you dont ask</p>
+      <p>You never have to be afraid to tell me when your overthinking ml</p>
+      <p>I love our matching profile pictures</p>
+      <p>I love our calls</p>
+      <p>I love you WAYY more</p>
+      <p>I'll love you 'til the day that I die 💕</p>
+    </div>
+    <img src="hello-kitty-girly-pop.gif" alt="Hello Kitty Right" class="hello-kitty right">
+  </div>
+
+  <!-- ⛅ Animated Clouds (top background) -->
+  <div class="cloud" style="width: 180px; height: 60px; top: 40px; left: -250px; animation-duration: 60s;"></div>
+  <div class="cloud" style="width: 220px; height: 70px; top: 20px; left: -500px; animation-duration: 80s; animation-delay: 5s;"></div>
+  <div class="cloud" style="width: 160px; height: 50px; top: 70px; left: -350px; animation-duration: 70s; animation-delay: 10s;"></div>
+  <div class="cloud" style="width: 200px; height: 65px; top: 30px; left: -600px; animation-duration: 75s; animation-delay: 15s;"></div>
+  <div class="cloud" style="width: 240px; height: 80px; top: 10px; left: -700px; animation-duration: 85s; animation-delay: 20s;"></div>
+
+  <div class="shooting-star" id="shootingStar1"><svg viewBox="0 0 24 24"><polygon points="12,2 14,8 20,8 15,12 17,18 12,14 7,18 9,12 4,8 10,8"/></svg></div>
+  <div class="shooting-star" id="shootingStar2"><svg viewBox="0 0 24 24"><polygon points="12,2 13.5,7 19,7 14,11 15.5,16 12,13 8.5,16 10,11 5,7 10.5,7"/></svg></div>
+
+  <audio id="bg-music" preload="auto" muted loop>
+    <source src="birds.mp3" type="audio/mpeg" />
+  </audio>
+
+  <div class="audio-controls" id="audioControls">
+    <button onclick="toggleAudio()" id="audio-btn">Pause Music</button>
+  </div>
+
+  <script>
+    const bgMusic = document.getElementById('bg-music');
+    const audioBtn = document.getElementById('audio-btn');
+    const mainContainer = document.getElementById('mainContainer');
+    const centerBox = document.getElementById('centerBox');
+    const audioControls = document.getElementById('audioControls');
+    const shootingStars = [document.getElementById('shootingStar1'), document.getElementById('shootingStar2')];
+
+    let animationStarted = false;
+
+    function animateShootingStars() {
+      shootingStars.forEach((star, idx) => {
+        setTimeout(() => shootingStarFlight(star), idx * 4000);
+      });
+    }
+
+    function shootingStarFlight(star) {
+      star.style.opacity = '1';
+      let startY = 10 + Math.random() * 40;
+      let startX = -20;
+      star.style.top = startY + 'vh';
+      star.style.left = startX + 'vw';
+
+      const totalDuration = 10000;
+      const frames = 60 * (totalDuration / 1000);
+      let frame = 0;
+
+      function step() {
+        frame++;
+        let progress = frame / frames;
+        let currentX = startX + 120 * progress;
+        let currentY = startY + 40 * progress + 5 * Math.sin(progress * 10 * Math.PI);
+
+        star.style.left = currentX + 'vw';
+        star.style.top = currentY + 'vh';
+
+        const trail = document.createElement('div');
+        trail.className = 'star-trail';
+        trail.style.left = currentX + 'vw';
+        trail.style.top = currentY + 'vh';
+        document.body.appendChild(trail);
+        setTimeout(() => trail.remove(), 1000);
+
+        if (frame < frames) {
+          requestAnimationFrame(step);
+        } else {
+          star.style.opacity = '0';
+          setTimeout(() => shootingStarFlight(star), 3000 + Math.random() * 3000);
+        }
+      }
+      step();
+    }
+
+    function startAnimation() {
+      if (animationStarted) return;
+      animationStarted = true;
+
+      mainContainer.classList.add('visible');
+      centerBox.classList.add('visible');
+      audioControls.classList.add('visible');
+
+      bgMusic.muted = false;
+      bgMusic.play().catch(e => console.log('Autoplay blocked:', e));
+
+      animateShootingStars();
+    }
+
+    // Twinkling stars
+    const starCount = 200;
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.top = `${Math.random() * 100}vh`;
+      star.style.left = `${Math.random() * 100}vw`;
+      star.style.animationDuration = `${1 + Math.random() * 2}s`;
+      star.style.opacity = Math.random();
+      document.body.appendChild(star);
+    }
+
+    // Even love symbol spread
+    const loveSymbolCount = 80;
+    for (let i = 0; i < loveSymbolCount; i++) {
+      const love = document.createElement('div');
+      love.textContent = 'T + A = ♾️';
+      love.className = 'love-symbol';
+      love.style.top = `${Math.random() * 100}vh`;
+      love.style.left = `${Math.random() * 100}vw`;
+      love.style.fontSize = `${10 + Math.random() * 14}px`;
+      love.style.opacity = 0.6 + Math.random() * 0.4;
+      love.style.animationDuration = `${3 + Math.random() * 3}s`;
+      document.body.appendChild(love);
+    }
+
+    window.addEventListener('click', startAnimation, { once: true });
+
+    function toggleAudio() {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        audioBtn.textContent = 'Pause Music';
+      } else {
+        bgMusic.pause();
+        audioBtn.textContent = 'Play Music';
+      }
+    }
+  </script>
+</body>
+</html>
+
+
